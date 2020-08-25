@@ -229,6 +229,7 @@ static void tls_options(rpc_t* rpc, void* c)
 		"verify_client",	&cfg_get(tls, tls_cfg, verify_client),
 		"private_key",		&cfg_get(tls, tls_cfg, private_key),
 		"ca_list",			&cfg_get(tls, tls_cfg, ca_list),
+		"ca_dir",			&cfg_get(tls, tls_cfg, ca_list),
 		"certificate",		&cfg_get(tls, tls_cfg, certificate),
 		"cipher_list",		&cfg_get(tls, tls_cfg, cipher_list),
 		"session_cache",	cfg_get(tls, tls_cfg, session_cache),

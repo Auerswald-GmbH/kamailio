@@ -197,12 +197,46 @@ for f in trusted_cas/*.pem ; do cat "$f" &gt;&gt; ca_list.pem ; done
 		<emphasis>verify_depth</emphasis>,
 		<emphasis>require_certificate</emphasis> and
 		<emphasis>crl</emphasis>.
+		<emphasis>ca_dir</emphasis>.
 	</para>
 	<example>
 	    <title>Set <varname>ca_list</varname> parameter</title>
 	    <programlisting>
 ...
 modparam("tls", "ca_list", "/usr/local/etc/kamailio/ca_list.pem")
+...
+	    </programlisting>
+	</example>
+	</section>
+
+	<section id="tls.p.ca_dir">
+	<title><varname>ca_dir</varname> (string)</title>
+	<para>
+		Sets the CA directory. This directory contains the trusted CAs certificates
+		used when connecting to other SIP implementations. If a signature in a
+		certificate chain belongs to one of the listed CAs, the verification
+		of that certificate will succeed.
+	</para>
+	<para>
+		This directory should contain certificates in PEM format where the names
+		are the hash values of the certificate. These names be created by the command
+        <programlisting>
+ $ openssl rehash
+        </programlisting>
+	</para>
+	<para>
+		See also
+		<emphasis>verify_certificate</emphasis>,
+		<emphasis>verify_depth</emphasis>,
+		<emphasis>require_certificate</emphasis> and
+		<emphasis>crl</emphasis>.
+		<emphasis>ca_list</emphasis>.
+	</para>
+	<example>
+	    <title>Set <varname>ca_dir</varname> parameter</title>
+	    <programlisting>
+...
+			modparam("tls", "ca_dir", "/usr/local/ssl/certs")
 ...
 	    </programlisting>
 	</example>
@@ -288,10 +322,12 @@ modparam("tls", "crl", "/usr/local/etc/kamailio/crl.pem")
 		OpenSSL man page.
 	</para>
 	<para>
-		Note: the certificate verification will always fail if the ca_list is empty.
+		Note: the certificate verification will always fail if the ca_list is empty
+		and no ca_dir is given.
 	</para>
 	<para>
-		See also: <varname>ca_list</varname>, <varname>require_certificate</varname>, <varname>verify_depth</varname>.
+		See also: <varname>ca_list</varname>, <varname>require_certificate</varname>, <varname>verify_depth</varname>,
+		<varname>ca_dir</varname>.
 	</para>
 	<para>
 		By default the certificate verification is off.
@@ -313,6 +349,7 @@ modparam("tls", "verify_certificate", 1)
 	</para>
 	<para>
 		See also: <varname>ca_list</varname>, <varname>require_certificate</varname>, <varname>verify_certificate</varname>,
+		<varname>ca_dir</varname>.
 	</para>
 	<para>
 		The default value is 9.
@@ -1048,6 +1085,7 @@ modparam("tls", "renegotiation", 1)
 			<listitem><para>certificate - (str) - see modparam</para></listitem>
 			<listitem><para>verify_depth - (int) - see modparam</para></listitem>
 			<listitem><para>ca_list - (str) - see modparam</para></listitem>
+			<listitem><para>ca_dir - (str) - see modparam</para></listitem>
 			<listitem><para>crl - (str) - see modparam</para></listitem>
 			<listitem><para>cipher_list - (str) - see modparam</para></listitem>
 			<listitem><para>server_name - (str) - SNI (server name identification)</para></listitem>
