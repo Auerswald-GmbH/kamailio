@@ -44,6 +44,7 @@ struct cfg_group_tls default_tls_cfg = {
 	STR_STATIC_INIT("off"), /* verify_client */
 	STR_NULL, /* private_key (default value set in fix_tls_cfg) */
 	STR_NULL, /* ca_list (default value set in fix_tls_cfg) */
+	STR_NULL, /* ca_dir (default value set in fix_tls_cfg) */
 	STR_NULL, /* crl (default value set in fix_tls_cfg) */
 	STR_NULL, /* certificate (default value set in fix_tls_cfg) */
 	STR_NULL, /* cipher_list (default value set in fix_tls_cfg) */
@@ -163,6 +164,8 @@ cfg_def_t	tls_cfg_def[] = {
 		" contained in the certificate file" },
 	{"ca_list", CFG_VAR_STR | CFG_READONLY, 0, 0, 0, 0,
 		"name of the file containing the trusted CA list (pem format)" },
+	{"ca_dir", CFG_VAR_STR | CFG_READONLY, 0, 0, 0, 0,
+		"name of the directory containing the trusted CA certificates (pem format)" },
 	{"crl", CFG_VAR_STR | CFG_READONLY, 0, 0, 0, 0,
 		"name of the file containing the CRL  (certificare revocation list"
 			" in pem format)" },
@@ -277,6 +280,8 @@ int fix_tls_cfg(struct cfg_group_tls* cfg)
 	if (fix_initial_pathname(&cfg->private_key, TLS_PKEY_FILE) < 0)
 		return -1;
 	if (fix_initial_pathname(&cfg->ca_list, TLS_CA_FILE) < 0 )
+		return -1;
+	if (fix_initial_pathname(&cfg->ca_dir, TLS_CA_DIR) < 0 )
 		return -1;
 	if (fix_initial_pathname(&cfg->crl, TLS_CRL_FILE) < 0 )
 		return -1;

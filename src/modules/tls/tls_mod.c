@@ -101,6 +101,7 @@ static tls_domain_t mod_params = {
 	0,                /* Verify certificate */
 	9,                /* Verify depth */
 	STR_STATIC_INIT(TLS_CA_FILE),      /* CA file */
+	STR_STATIC_INIT(TLS_CA_DIR),       /* CA dir */
 	0,                /* Require certificate */
 	{0, },                /* Cipher list */
 	TLS_USE_TLSv1_PLUS,   /* TLS method */
@@ -212,6 +213,7 @@ static param_export_t params[] = {
 	{"verify_client",       PARAM_STR,    &default_tls_cfg.verify_client},
 	{"private_key",         PARAM_STR,    &default_tls_cfg.private_key  },
 	{"ca_list",             PARAM_STR,    &default_tls_cfg.ca_list      },
+	{"ca_dir",              PARAM_STR,    &default_tls_cfg.ca_dir       },
 	{"certificate",         PARAM_STR,    &default_tls_cfg.certificate  },
 	{"crl",                 PARAM_STR,    &default_tls_cfg.crl          },
 	{"cipher_list",         PARAM_STR,    &default_tls_cfg.cipher_list  },
@@ -330,6 +332,7 @@ static int mod_init(void)
 	mod_params.require_cert = cfg_get(tls, tls_cfg, require_cert);
 	mod_params.pkey_file = cfg_get(tls, tls_cfg, private_key);
 	mod_params.ca_file = cfg_get(tls, tls_cfg, ca_list);
+	mod_params.ca_dir= cfg_get(tls, tls_cfg, ca_dir);
 	mod_params.crl_file = cfg_get(tls, tls_cfg, crl);
 	mod_params.cert_file = cfg_get(tls, tls_cfg, certificate);
 	mod_params.cipher_list = cfg_get(tls, tls_cfg, cipher_list);
